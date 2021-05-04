@@ -1,20 +1,20 @@
-const randomUserApi = 'https://randomuser.me/api/?results=12';
+const randomUserApi = 'https://randomuser.me/api/?results=12&nat=gb';
 
 const formContainer = document.querySelector('.search-container');
+
 const gallery = document.querySelector('.gallery');
 
 let employees = [];
 
-window.addEventListener('load', () => {
-  const formHTML = `
+const formHTML = `
     <form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>
     `;
-  formContainer.insertAdjacentHTML('beforeend', formHTML);
-  console.log('ciao');
-});
+formContainer.insertAdjacentHTML('beforeend', formHTML);
+
+const form = document.querySelector('form');
 
 // Fetch data from an url, parse to json and call  callback functions
 
@@ -27,20 +27,20 @@ fetch(randomUserApi)
 // create a function to generate the HTML
 
 function generateHTML(data) {
-  // Store the users in the employees array
+  // Store the employees in the employees array
   employees = data;
   //   Loop through the data array
-  data.forEach((user, index) => {
-    //   Create a card for each user
+  employees.forEach((employee, index) => {
+    //   Create a card for each employee
     const card = `
         <div class="card" data-index=${index}>
         <div class="card-img-container">
-            <img class="card-img" src=${user.picture.large} alt=${user.name.last}>
+            <img class="card-img" src=${employee.picture.large} alt=${employee.name.last}>
         </div>
         <div class="card-info-container">
-            <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
-            <p class="card-text">${user.email}</p>
-            <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
+            <h3 id="name" class="card-name cap">${employee.name.first} ${employee.name.last}</h3>
+            <p class="card-text">${employee.email}</p>
+            <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
         </div>
         </div>
 `;
@@ -99,4 +99,21 @@ gallery.addEventListener('click', (e) => {
     // call the generate modal function passing the data-index as argument
     generateModalWindow(index);
   }
+});
+
+// Filter Handler
+
+function searchEmployee(input) {
+  const filteredEmployees = [];
+
+  employees.forEach((employee) => {
+    const fullName = employee.name.first + employee.name.last;
+    console.log(fullName);
+  });
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = document.getElementById('search-input');
+  searchEmployee(input.value);
 });
