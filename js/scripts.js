@@ -6,31 +6,32 @@ const gallery = document.querySelector('.gallery');
 
 let employees = [];
 
+// Create the form
 const formHTML = `
     <form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>
     `;
+
+// Insert the form in the dom
 formContainer.insertAdjacentHTML('beforeend', formHTML);
 
-const form = document.querySelector('form');
-
 // Fetch data from an url, parse to json and call  callback functions
-
 fetch(randomUserApi)
   .then((res) => res.json())
   .then((res) => res.results)
+  .then((data) => {
+    employees = data;
+    return data;
+  })
   .then(generateHTML)
   .catch((error) => console.log('Looks like there was a problem!', error));
 
 // create a function to generate the HTML
-
 function generateHTML(data) {
-  // Store the employees in the employees array
-  employees = data;
   //   Loop through the data array
-  employees.forEach((employee, index) => {
+  data.forEach((employee, index) => {
     //   Create a card for each employee
     const card = `
         <div class="card" data-index=${index}>
@@ -43,11 +44,10 @@ function generateHTML(data) {
             <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
         </div>
         </div>
-`;
+      `;
     // Append the card to the gallery div
     gallery.insertAdjacentHTML('beforeend', card);
   });
-  console.log(employees);
 }
 
 // Generate a modal window
@@ -57,6 +57,7 @@ function generateModalWindow(index) {
   let day = new Date(dob.date).getDay();
   let year = new Date(dob.date).getFullYear();
 
+  // Create the modal window
   const modalHTML = `
 <div class="modal-container">
     <div class="modal">
@@ -107,13 +108,26 @@ function searchEmployee(input) {
   const filteredEmployees = [];
 
   employees.forEach((employee) => {
+    //   join the first and the last name
     const fullName = employee.name.first + employee.name.last;
-    console.log(fullName);
+    // Check if the input value match any letters in the employees name
+    if (fullName.toUpperCase().includes(input.toUpperCase())) {
+      filteredEmployees.push(employee);
+    }
   });
+  //  empty the gallery
+  gallery.innerHTML = '';
+
+  //   Generate a new gallery
+  generateHTML(filteredEmployees);
 }
 
+// Handler search
+const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const input = document.getElementById('search-input');
   searchEmployee(input.value);
 });
+
+// Clear filter handler
