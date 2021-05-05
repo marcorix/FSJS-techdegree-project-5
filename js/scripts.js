@@ -1,9 +1,8 @@
+// Global variables
 const randomUserApi = 'https://randomuser.me/api/?results=12&nat=us';
-
 const formContainer = document.querySelector('.search-container');
-
 const gallery = document.querySelector('.gallery');
-
+const body = document.querySelector('body');
 let employees = [];
 let indexModalWindow = null;
 
@@ -82,7 +81,7 @@ function generateModalWindow(index) {
       `;
 
   // Insert the modal window in the body
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  body.insertAdjacentHTML('beforeend', modalHTML);
 
   // Get the elements in the modal window
   const closeBtn = document.getElementById('modal-close-btn');
