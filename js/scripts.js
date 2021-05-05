@@ -1,4 +1,4 @@
-const randomUserApi = 'https://randomuser.me/api/?results=12&nat=gb';
+const randomUserApi = 'https://randomuser.me/api/?results=12&nat=us';
 
 const formContainer = document.querySelector('.search-container');
 
@@ -53,7 +53,7 @@ function generateHTML(data) {
 
 // Generate a modal window
 function generateModalWindow(index) {
-  let { email, location, name, phone, picture, dob } = employees[index];
+  let { email, location, name, phone, picture, dob, nat } = employees[index];
   let month = new Date(dob.date).getMonth();
   let day = new Date(dob.date).getDay();
   let year = new Date(dob.date).getFullYear();
@@ -70,7 +70,7 @@ function generateModalWindow(index) {
                 <p class="modal-text cap">${location.city}</p>
                 <hr>
                 <p class="modal-text">${phone}</p>
-                <p class="modal-text">${location.street.number} ${location.street.name}, ${location.city},  ${location.postcode}</p>
+                <p class="modal-text">${location.street.number} ${location.street.name}, ${location.city}, ${nat},  ${location.postcode}</p>
                 <p class="modal-text">Birthday: ${day}/${month}/${year}</p>
             </div>
             <div class="modal-btn-container">
