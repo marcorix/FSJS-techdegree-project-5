@@ -15,7 +15,7 @@ body {
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   text-align: center;
   background: #d5ecc2;
 }
@@ -110,6 +110,7 @@ header h1 {
 
 .card-name {
   margin: 20px auto 0;
+  color: #45526c;
 }
 
 .card-text {
@@ -169,6 +170,7 @@ header h1 {
 
 .modal-name {
   margin-bottom: 5px;
+  color: #45526c;
 }
 
 .modal-text {
